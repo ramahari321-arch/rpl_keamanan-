@@ -55,4 +55,42 @@ class Validators {
     }
     return null;
   }
+
+  /// Memvalidasi nomor telepon: hanya angka, 10–13 digit.
+  static String? validatePhone(String? value) {
+    if (!isNotEmpty(value)) {
+      return 'Nomor telepon tidak boleh kosong';
+    }
+    if (!RegExp(r'^[0-9]{10,13}$').hasMatch(value!.trim())) {
+      return 'Nomor telepon harus berisi 10-13 digit angka';
+    }
+    return null;
+  }
+
+  /// Memvalidasi URL dengan skema HTTP/HTTPS dan host yang tidak kosong.
+  static String? validateUrl(String? value) {
+    if (!isNotEmpty(value)) {
+      return 'URL tidak boleh kosong';
+    }
+    final input = value!.trim();
+    final uri = Uri.tryParse(input);
+    if (!RegExp(r'^https?://[^\s/?#]+(?:[/?#][^\s]*)?$').hasMatch(input) ||
+        uri == null ||
+        uri.host.isEmpty) {
+      return 'URL harus dimulai dengan http:// atau https:// dan memiliki host';
+    }
+    return null;
+  }
+
+  /// Memvalidasi password minimal 8 karakter dengan huruf kapital, angka, dan simbol.
+  static String? validatePassword(String? value) {
+    if (!isNotEmpty(value)) {
+      return 'Password tidak boleh kosong';
+    }
+    if (!RegExp(r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9\s])\S{8,}$')
+        .hasMatch(value!)) {
+      return 'Password minimal 8 karakter dan harus mengandung huruf kapital, angka, serta simbol';
+    }
+    return null;
+  }
 }

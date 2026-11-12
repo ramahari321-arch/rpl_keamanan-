@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../config/dependency_injector.dart';
 import '../services/secure_storage_service.dart';
+import 'post_list_screen.dart';
 import 'user_list_screen.dart';
 
 /// Halaman utama untuk secure storage dan akses daftar pengguna.
@@ -167,7 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    const Text('Ambil data pengguna dari JSONPlaceholder.'),
+                    const Text(
+                      'Ambil data pengguna dan postingan dari JSONPlaceholder.',
+                    ),
                     const SizedBox(height: 16),
                     SizedBox(
                       width: double.infinity,
@@ -175,11 +179,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute<void>(
-                            builder: (context) => const UserListScreen(),
+                            builder: (context) => UserListScreen(
+                              repository: DependencyInjector.of(context)
+                                  .userRepository,
+                            ),
                           ),
                         ),
                         icon: const Icon(Icons.list),
                         label: const Text('Lihat Daftar Pengguna'),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (context) => PostListScreen(
+                              repository: DependencyInjector.of(context)
+                                  .postRepository,
+                            ),
+                          ),
+                        ),
+                        icon: const Icon(Icons.article),
+                        label: const Text('Lihat Daftar Postingan'),
                       ),
                     ),
                   ],

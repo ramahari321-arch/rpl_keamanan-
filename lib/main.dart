@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'config/app_config.dart';
+import 'config/dependency_injector.dart';
 import 'screens/home_screen.dart';
 
 /// Entry point aplikasi.
@@ -16,7 +17,7 @@ Future<void> main() async {
     debugPrint('Konfigurasi .env tidak lengkap. Periksa file .env Anda.');
   }
 
-  runApp(const MyApp());
+  runApp(const DependencyInjectorHost(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
